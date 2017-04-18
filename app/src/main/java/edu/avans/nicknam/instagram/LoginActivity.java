@@ -1,5 +1,6 @@
 package edu.avans.nicknam.instagram;
 
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
@@ -34,21 +35,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton = (Button) findViewById(R.id.loginButton);
         login = new Login();
 
-        if (savedInstanceState != null) {
-            loginStatus = (LoginStatus) savedInstanceState.getSerializable("loginStatus");
-            loginStatus.refresh(this);
-        } else {
+        if (savedInstanceState == null)
             loginStatus = new LoginStatus(this);
-        }
 
-        findViewById(R.id.loginButton).getBackground().setAlpha(30);
-        findViewById(R.id.usernameEditText).getBackground().setAlpha(30);
-        findViewById(R.id.passwordEditText).getBackground().setAlpha(30);
+        usernameEditText.getBackground().setAlpha(30);
+        passwordEditText.getBackground().setAlpha(30);
 
         ConstraintLayout container = (ConstraintLayout) findViewById(R.id.activity_login);
         anim = (AnimationDrawable) container.getBackground();
-        anim.setEnterFadeDuration(5000);
-        anim.setExitFadeDuration(5000);
+        anim.setEnterFadeDuration(500);
+        anim.setExitFadeDuration(10000);
 
         usernameEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -107,6 +103,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("loginStatus", loginStatus);
+        outState.putIntArray("animState", anim.getState());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        loginStatus = (LoginStatus) savedInstanceState.getSerializable("loginStatus");
+        loginStatus.refresh(this);
+        anim.setState(savedInstanceState.getIntArray("animState"));
     }
 
     @Override
@@ -126,6 +131,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void statusChanged(boolean ready) {
         loginButton.setEnabled(ready);
+        if (ready) {
+            loginButton.setBackgroundColor(Color.WHITE);
+            loginButton.setTextColor(Color.BLACK);
+            loginButton.setAlpha(1f);
+        } else {
+            loginButton.setBackgroundColor(Color.TRANSPARENT);
+            loginButton.setAlpha(.3f);
+        }
         Log.i("Status", String.valueOf(ready));
     }
 

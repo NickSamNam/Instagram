@@ -62,7 +62,8 @@
             android:paddingEnd="15dp"
             android:textColorHint="?android:attr/textColorSecondaryInverse"
             android:fontFamily="sans-serif"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:textCursorDrawable="@null"/>
 
     <EditText
             android:layout_height="50dp"
@@ -84,7 +85,8 @@
             android:paddingEnd="15dp"
             android:textColorHint="?android:attr/textColorSecondaryInverse"
             android:fontFamily="sans-serif"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:textCursorDrawable="@null"/>
 
     <Button
             android:layout_width="0dp"
@@ -94,7 +96,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
             app:layout_constraintVertical_bias="0.100000024"
-            android:background="@android:color/white"
+            android:background="@android:color/transparent"
             android:text="@string/login_button"
             android:layout_marginStart="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -104,11 +106,12 @@
             android:textColor="@android:color/white"
             android:textColorHint="?android:attr/textColorSecondaryInverse"
             android:fontFamily="sans-serif"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:alpha=".3"/>
 
     <TextView
             android:text="@string/forgot_details"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/textView"
             android:layout_marginStart="16dp"
