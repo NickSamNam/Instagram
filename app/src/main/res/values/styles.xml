@@ -3,14 +3,20 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/InstaGray</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:colorBackground">@android:color/background_light</item>
+    </style>
+
+    <style name="spinnerStyle" parent="Base.Widget.AppCompat.Spinner">
+        <item name="android:textColor">@color/spinnerTextColor</item>
     </style>
 
 </resources>

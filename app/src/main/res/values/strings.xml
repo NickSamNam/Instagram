@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Instagram</string>
-    <string name="login_button">log in</string>
+    <string name="login_button">Log In</string>
     <string name="username_field">Phone number, email or username</string>
     <string name="password_field">Password</string>
+    <string name="forgot_details">Forgot your login details? <b>Get help signing in.</b></string>
+    <string name="server_error">Could not connect to the server</string>
 </resources>
