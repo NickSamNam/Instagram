@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class LoginStatus implements Serializable {
     private boolean usernameReady;
     private boolean passwordReady;
+    private String status;
     private transient StatusChangedListener scl;
 
     public LoginStatus(StatusChangedListener scl) {
@@ -38,6 +39,15 @@ public class LoginStatus implements Serializable {
             scl.statusChanged(true);
         else
             scl.statusChanged(false);
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public boolean attemptLogin() {
+        status = "failed";
+        return false;
     }
 
     public interface StatusChangedListener {

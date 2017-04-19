@@ -17,12 +17,10 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginStatus.StatusChangedListener {
     private AnimationDrawable anim;
     private LoginStatus loginStatus;
-    private Login login;
     private Button loginButton;
 
     @Override
@@ -33,7 +31,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         EditText usernameEditText = (EditText) findViewById(R.id.usernameEditText);
         EditText passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         loginButton = (Button) findViewById(R.id.loginButton);
-        login = new Login();
 
         if (savedInstanceState == null)
             loginStatus = new LoginStatus(this);
@@ -86,16 +83,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
         loginButton.setOnClickListener(this);
         ArrayList<String> languages = new ArrayList<>();
-        String language;
-        language = getResources().getConfiguration().locale.getDisplayLanguage();
-        if(language.length() > 0 && !languages.contains(language)){
-            languages.add(language);
+        languages.add(getResources().getConfiguration().locale.getDisplayLanguage());
+        for(String locale : getResources().getAssets().getLocales()) {
+            if(locale.length() > 0 && !languages.contains(locale)){
+                languages.add(locale);
+            }
         }
         Collections.sort(languages, String.CASE_INSENSITIVE_ORDER);
-
         Spinner languageSpinner = (Spinner)findViewById(R.id.languageSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, languages);
-        adapter.setDropDownViewResource(R.layout.spinner_style);
+        adapter.setDropDownViewResource(R.layout.spinner_item_style);
         languageSpinner.setAdapter(adapter);
     }
 
@@ -144,7 +141,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if (!login.attemptLogin()) {
+        if (!loginStatus.attemptLogin()) {
             Snackbar.make(findViewById(R.id.activity_login), R.string.server_error, Snackbar.LENGTH_LONG).show();
             Log.i("Login", "failed");
         }
