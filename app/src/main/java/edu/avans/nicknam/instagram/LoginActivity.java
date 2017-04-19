@@ -31,15 +31,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         EditText usernameEditText = (EditText) findViewById(R.id.usernameEditText);
         EditText passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         loginButton = (Button) findViewById(R.id.loginButton);
+        ConstraintLayout container = (ConstraintLayout) findViewById(R.id.activity_login);
+        anim = (AnimationDrawable) container.getBackground();
 
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
             loginStatus = new LoginStatus(this);
+        } else {
+            loginStatus = (LoginStatus) savedInstanceState.getSerializable("loginStatus");
+            loginStatus.refresh(this);
+            anim.setState(savedInstanceState.getIntArray("animState"));
+        }
 
         usernameEditText.getBackground().setAlpha(30);
         passwordEditText.getBackground().setAlpha(30);
 
-        ConstraintLayout container = (ConstraintLayout) findViewById(R.id.activity_login);
-        anim = (AnimationDrawable) container.getBackground();
         anim.setEnterFadeDuration(500);
         anim.setExitFadeDuration(10000);
 
@@ -101,14 +106,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onSaveInstanceState(outState);
         outState.putSerializable("loginStatus", loginStatus);
         outState.putIntArray("animState", anim.getState());
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        loginStatus = (LoginStatus) savedInstanceState.getSerializable("loginStatus");
-        loginStatus.refresh(this);
-        anim.setState(savedInstanceState.getIntArray("animState"));
     }
 
     @Override

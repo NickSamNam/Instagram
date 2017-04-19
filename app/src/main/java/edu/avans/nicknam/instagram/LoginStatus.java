@@ -32,6 +32,7 @@ public class LoginStatus implements Serializable {
 
     public void refresh(StatusChangedListener scl) {
         this.scl = scl;
+        update();
     }
 
     private void update() {
