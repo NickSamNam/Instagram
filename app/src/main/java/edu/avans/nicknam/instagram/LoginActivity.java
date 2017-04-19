@@ -1,5 +1,6 @@
 package edu.avans.nicknam.instagram;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -12,10 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginStatus.StatusChangedListener {
     private AnimationDrawable anim;
@@ -34,40 +32,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         anim = (AnimationDrawable) activityLogin.getBackground();
         Spinner languageSpinner = (Spinner)findViewById(R.id.languageSpinner);
         final HashMap<String, Locale> localeHashMap = new HashMap<>();
-        Locale[] locales = Locale.getAvailableLocales();
-        for(Locale locale : locales) {
-            if(locale.getDisplayLanguage().length() > 0 && !localeHashMap.containsKey(locale.getDisplayLanguage())){
-                localeHashMap.put(locale.getDisplayLanguage(), locale);
-            }
+        ArrayList<String> languages = new ArrayList<>();
+        for(String ISOLanguage : Locale.getISOLanguages()) {
+            Locale locale = new Locale(ISOLanguage);
+            localeHashMap.put(locale.getDisplayLanguage(), new Locale(ISOLanguage));
+            languages.add(locale.getDisplayLanguage());
         }
-        ArrayList<String> languages = new ArrayList<>(localeHashMap.keySet());
         Collections.sort(languages, String.CASE_INSENSITIVE_ORDER);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, languages);
         adapter.setDropDownViewResource(R.layout.spinner_item_style);
         languageSpinner.setAdapter(adapter);
-//        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Locale oldLocale = getResources().getConfiguration().locale;
-//                Locale newLocale = localeHashMap.get(parent.getSelectedItem());
-//                if (newLocale != oldLocale) {
+        languageSpinner.setSelection(adapter.getPosition(getResources().getConfiguration().locale.getDisplayLanguage()));
+        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Locale oldLocale = getResources().getConfiguration().locale;
+                oldLocale = new Locale(oldLocale.getLanguage().substring(0, 2));
+                Locale newLocale = localeHashMap.get(parent.getSelectedItem());
+                newLocale = new Locale(newLocale.getLanguage().substring(0, 2));
+                Log.i("Old Locale", oldLocale.toLanguageTag());
+                Log.i("New Locale", newLocale.toLanguageTag());
+                if (!newLocale.toLanguageTag().equals(oldLocale.toLanguageTag())) {
+                    Configuration configuration = new Configuration(getResources().getConfiguration());
+                    configuration.setLocale(newLocale);
+                    getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+                    // TODO: 19-4-2017 ask why not possible
 //                    getResources().getConfiguration().setLocale(newLocale);
-//                    finish();
-//                    startActivity(getIntent());
-//                    Log.i("Language", getResources().getConfiguration().locale.getDisplayLanguage());
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-        //Broken line
-        //Broken line
-        Log.i("Spinner selection", String.valueOf((getResources().getConfiguration().locale.getDisplayCountry())));
-        getResources().getConfiguration().setLocale(Locale.forLanguageTag("nl"));
-        languageSpinner.setSelection(adapter.getPosition(getResources().getConfiguration().locale.getDisplayCountry()));
+//                    getResources().getConfiguration().setTo(new Configuration(getResources().getConfiguration()));
+                    finish();
+                    startActivity(getIntent());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         if (savedInstanceState == null) {
             loginStatus = new LoginStatus(this);
         } else {
@@ -128,7 +130,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onSaveInstanceState(outState);
         outState.putSerializable("loginStatus", loginStatus);
         outState.putIntArray("animState", anim.getState());
-        outState.putSerializable("locale", getResources().getConfiguration().locale);
     }
 
     @Override
