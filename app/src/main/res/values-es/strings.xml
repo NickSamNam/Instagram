@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Instagram</string>
+    <string name="forgot_details">¿Has olvidado tu información de inicio de sesión? <b>Obtén ayuda.</b></string>
+    <string name="login_button">Entrar</string>
+    <string name="password_field">Contraseña</string>
+    <string name="server_error">No se puede conectar con el servidor</string>
+    <string name="username_field">Número de teléfono, correo electrónico origen</string>
+</resources>

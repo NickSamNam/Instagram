@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Instagram</string>
+    <string name="forgot_details">Aaanmeldgegevens vergeten? <b>Hulp bij het aanmelden.</b></string>
+    <string name="login_button">Aanmelden</string>
+    <string name="password_field">Wachtwoord</string>
+    <string name="server_error">Kan niet verbinden met de server</string>
+    <string name="username_field">Telefoonnummer, e-mailadres of gebruikersnaam</string>
+</resources>

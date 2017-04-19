@@ -2,21 +2,20 @@ package edu.avans.nicknam.instagram;
 
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginStatus.StatusChangedListener {
     private AnimationDrawable anim;
@@ -31,9 +30,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         EditText usernameEditText = (EditText) findViewById(R.id.usernameEditText);
         EditText passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         loginButton = (Button) findViewById(R.id.loginButton);
-        ConstraintLayout container = (ConstraintLayout) findViewById(R.id.activity_login);
-        anim = (AnimationDrawable) container.getBackground();
-
+        ConstraintLayout activityLogin = (ConstraintLayout) findViewById(R.id.activity_login);
+        anim = (AnimationDrawable) activityLogin.getBackground();
+        Spinner languageSpinner = (Spinner)findViewById(R.id.languageSpinner);
+        final HashMap<String, Locale> localeHashMap = new HashMap<>();
+        Locale[] locales = Locale.getAvailableLocales();
+        for(Locale locale : locales) {
+            if(locale.getDisplayLanguage().length() > 0 && !localeHashMap.containsKey(locale.getDisplayLanguage())){
+                localeHashMap.put(locale.getDisplayLanguage(), locale);
+            }
+        }
+        ArrayList<String> languages = new ArrayList<>(localeHashMap.keySet());
+        Collections.sort(languages, String.CASE_INSENSITIVE_ORDER);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, languages);
+        adapter.setDropDownViewResource(R.layout.spinner_item_style);
+        languageSpinner.setAdapter(adapter);
+//        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Locale oldLocale = getResources().getConfiguration().locale;
+//                Locale newLocale = localeHashMap.get(parent.getSelectedItem());
+//                if (newLocale != oldLocale) {
+//                    getResources().getConfiguration().setLocale(newLocale);
+//                    finish();
+//                    startActivity(getIntent());
+//                    Log.i("Language", getResources().getConfiguration().locale.getDisplayLanguage());
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+        //Broken line
+        //Broken line
+        Log.i("Spinner selection", String.valueOf((getResources().getConfiguration().locale.getDisplayCountry())));
+        getResources().getConfiguration().setLocale(Locale.forLanguageTag("nl"));
+        languageSpinner.setSelection(adapter.getPosition(getResources().getConfiguration().locale.getDisplayCountry()));
         if (savedInstanceState == null) {
             loginStatus = new LoginStatus(this);
         } else {
@@ -87,18 +121,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
         loginButton.setOnClickListener(this);
-        ArrayList<String> languages = new ArrayList<>();
-        languages.add(getResources().getConfiguration().locale.getDisplayLanguage());
-        for(String locale : getResources().getAssets().getLocales()) {
-            if(locale.length() > 0 && !languages.contains(locale)){
-                languages.add(locale);
-            }
-        }
-        Collections.sort(languages, String.CASE_INSENSITIVE_ORDER);
-        Spinner languageSpinner = (Spinner)findViewById(R.id.languageSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, languages);
-        adapter.setDropDownViewResource(R.layout.spinner_item_style);
-        languageSpinner.setAdapter(adapter);
     }
 
     @Override
@@ -106,6 +128,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onSaveInstanceState(outState);
         outState.putSerializable("loginStatus", loginStatus);
         outState.putIntArray("animState", anim.getState());
+        outState.putSerializable("locale", getResources().getConfiguration().locale);
     }
 
     @Override
