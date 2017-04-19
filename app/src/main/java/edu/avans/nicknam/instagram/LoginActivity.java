@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("Current locale", getResources().getConfiguration().locale.getDisplayLanguage());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -31,36 +32,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ConstraintLayout activityLogin = (ConstraintLayout) findViewById(R.id.activity_login);
         anim = (AnimationDrawable) activityLogin.getBackground();
         Spinner languageSpinner = (Spinner)findViewById(R.id.languageSpinner);
-        final HashMap<String, Locale> localeHashMap = new HashMap<>();
-        ArrayList<String> languages = new ArrayList<>();
-        for(String ISOLanguage : Locale.getISOLanguages()) {
-            Locale locale = new Locale(ISOLanguage);
-            localeHashMap.put(locale.getDisplayLanguage(), new Locale(ISOLanguage));
-            languages.add(locale.getDisplayLanguage());
-        }
-        Collections.sort(languages, String.CASE_INSENSITIVE_ORDER);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, languages);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
+                AvailableLocales.getAvailableLocalesAsDisplayLanguage());
+
         adapter.setDropDownViewResource(R.layout.spinner_item_style);
         languageSpinner.setAdapter(adapter);
-        languageSpinner.setSelection(adapter.getPosition(getResources().getConfiguration().locale.getDisplayLanguage()));
+        languageSpinner.setSelection(adapter.getPosition(getResources().getConfiguration().locale
+                .getDisplayLanguage(getResources().getConfiguration().locale)));
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Locale oldLocale = getResources().getConfiguration().locale;
-                oldLocale = new Locale(oldLocale.getLanguage().substring(0, 2));
-                Locale newLocale = localeHashMap.get(parent.getSelectedItem());
-                newLocale = new Locale(newLocale.getLanguage().substring(0, 2));
-                Log.i("Old Locale", oldLocale.toLanguageTag());
-                Log.i("New Locale", newLocale.toLanguageTag());
-                if (!newLocale.toLanguageTag().equals(oldLocale.toLanguageTag())) {
+                Locale newLocale = AvailableLocales.getAvailableLocalesHashMap().get(parent.getSelectedItem());
+                if (!newLocale.getLanguage().equals(oldLocale.getLanguage())) {
+                    Log.i("Old Locale", oldLocale.getLanguage());
+                    Log.i("New Locale", newLocale.getLanguage());
+
                     Configuration configuration = new Configuration(getResources().getConfiguration());
                     configuration.setLocale(newLocale);
                     getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
-                    // TODO: 19-4-2017 ask why not possible
+//                     TODO: 19-4-2017 ask why not possible
 //                    getResources().getConfiguration().setLocale(newLocale);
+//                    getResources().getConfiguration().setLayoutDirection(newLocale);
 //                    getResources().getConfiguration().setTo(new Configuration(getResources().getConfiguration()));
-                    finish();
-                    startActivity(getIntent());
+//                    getResources().getConfiguration().locale = newLocale;
+//                    onConfigurationChanged(getResources().getConfiguration());
+//                    getResources().getConfiguration().updateFrom(configuration);
+
+                    recreate();
                 }
             }
 
@@ -154,7 +153,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             loginButton.setTextColor(Color.BLACK);
             loginButton.setAlpha(1f);
         } else {
-            loginButton.setBackgroundColor(Color.TRANSPARENT);
+            loginButton.setBackground(getDrawable(R.drawable.button_border));
             loginButton.setAlpha(.3f);
         }
         Log.i("Status", String.valueOf(ready));

@@ -6,4 +6,5 @@
     <string name="password_field">Wachtwoord</string>
     <string name="server_error">Kan niet verbinden met de server</string>
     <string name="username_field">Telefoonnummer, e-mailadres of gebruikersnaam</string>
+    <string name="or"><b>OF</b></string>
 </resources>

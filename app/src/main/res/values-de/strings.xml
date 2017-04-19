@@ -6,4 +6,5 @@
     <string name="password_field">Passwort</string>
     <string name="server_error">Konnte keine Verbindung zum Server herstellen</string>
     <string name="username_field">Telefonnummer, E-Mail-Adresse order Benutzername</string>
+    <string name="or"><b>ODER</b></string>
 </resources>

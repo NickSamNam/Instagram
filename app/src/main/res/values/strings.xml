@@ -5,4 +5,5 @@
     <string name="password_field">Password</string>
     <string name="forgot_details">Forgot your login details? <b>Get help signing in.</b></string>
     <string name="server_error">Could not connect to the server</string>
+    <string name="or"><b>OR</b></string>
 </resources>

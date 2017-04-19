@@ -6,4 +6,5 @@
     <string name="password_field">Contraseña</string>
     <string name="server_error">No se puede conectar con el servidor</string>
     <string name="username_field">Número de teléfono, correo electrónico origen</string>
+    <string name="or"><b>O</b></string>
 </resources>
