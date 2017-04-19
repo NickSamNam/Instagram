@@ -10,7 +10,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".LoginActivity"
                   android:configChanges="layoutDirection|locale"
-                  android:windowSoftInputMode="adjustPan|adjustResize">
+                  android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
