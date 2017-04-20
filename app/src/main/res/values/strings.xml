@@ -6,4 +6,7 @@
     <string name="forgot_details">Forgot your login details? <b>Get help signing in.</b></string>
     <string name="server_error">Could not connect to the server</string>
     <string name="or"><b>OR</b></string>
+    <string name="sign_up">Don\'t have an account? <b>Sign up.</b> </string>
+    <string name="facebook_app_id" translatable="false">2055325521363877</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb2055325521363877</string>
 </resources>
