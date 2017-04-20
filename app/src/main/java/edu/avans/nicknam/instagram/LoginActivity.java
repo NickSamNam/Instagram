@@ -5,16 +5,13 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.*;
 
@@ -37,7 +34,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("onCreate", "started");
         Log.i("Current locale", getResources().getConfiguration().locale.getDisplayLanguage());
+        long startTime = System.nanoTime();
+
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
@@ -143,7 +143,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
         loginButton.setOnClickListener(this);
 
-        fbLoginButton = (LoginButton) findViewById(R.id.login_button);
+        fbLoginButton = (LoginButton) findViewById(R.id.fbLoginButton);
         callbackManager = CallbackManager.Factory.create();
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -159,6 +159,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onError(FacebookException error) {
             }
         });
+        long endTime = System.nanoTime();
+        Log.i("onCreate", "completed in " + (endTime-startTime));
     }
 
     @Override
