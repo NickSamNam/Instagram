@@ -43,6 +43,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="35dp"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/app_name"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintLeft_toLeftOf="@+id/guidelineLeft"
             app:layout_constraintRight_toLeftOf="@+id/guidelineRight"
