@@ -96,9 +96,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             anim.setState(savedInstanceState.getIntArray("animState"));
         }
 
-        usernameEditText.getBackground().setAlpha(30);
-        passwordEditText.getBackground().setAlpha(30);
-        findViewById(R.id.signUpTextView).getBackground().setAlpha(30);
+        usernameEditText.getBackground().setAlpha(20);
+        passwordEditText.getBackground().setAlpha(20);
+        findViewById(R.id.signUpTextView).getBackground().setAlpha(20);
 
         anim.setEnterFadeDuration(500);
         anim.setExitFadeDuration(10000);

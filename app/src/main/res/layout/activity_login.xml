@@ -145,30 +145,50 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <View
-            android:id="@+id/line1"
+            android:id="@+id/lineOrLeft"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="0dp"
+            android:alpha=".3"
             android:background="@android:color/white"
-            app:layout_constraintBaseline_toBaselineOf="@+id/orTextView"
-            app:layout_constraintLeft_toRightOf="@+id/guidelineLeft"
+            app:layout_constraintBottom_toBottomOf="@+id/orTextView"
+            app:layout_constraintLeft_toLeftOf="@+id/guidelineLeft"
             app:layout_constraintRight_toLeftOf="@+id/orTextView"
-            tools:layout_editor_absoluteX="33dp"
-            tools:layout_editor_absoluteY="421dp" />
+            app:layout_constraintTop_toTopOf="@+id/orTextView" />
 
         <View
-            android:id="@+id/line2"
+            android:id="@+id/lineSignUp"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:alpha=".3"
             android:background="@android:color/white"
-            app:layout_constraintBaseline_toBaselineOf="@+id/orTextView"
+            app:layout_constraintBottom_toTopOf="@+id/signUpTextView"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <View
+            android:id="@+id/lineOrRight"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:alpha=".3"
+            android:background="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/orTextView"
+            app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintLeft_toRightOf="@+id/orTextView"
             app:layout_constraintRight_toLeftOf="@+id/guidelineRight"
-            tools:layout_editor_absoluteX="210dp"
-            tools:layout_editor_absoluteY="421dp" />
+            app:layout_constraintTop_toTopOf="@+id/orTextView"
+            app:layout_constraintVertical_bias="0.5" />
 
         <TextView
             android:id="@+id/orTextView"
