@@ -15,12 +15,4 @@
         <item name="android:colorBackground">@android:color/background_light</item>
     </style>
 
-    <style name="spinnerItemStyle" parent="Base.Widget.AppCompat.Spinner">
-        <item name="android:textColor">@color/spinnerTextColor</item>
-    </style>
-
-    <style name="spinnerStyle" parent="Base.Widget.AppCompat.Spinner">
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-
 </resources>

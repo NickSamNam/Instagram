@@ -1,5 +1,6 @@
 package edu.avans.nicknam.instagram;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -11,7 +12,9 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.*;
 
@@ -51,18 +54,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         anim = (AnimationDrawable) findViewById(R.id.activity_login).getBackground();
         Spinner languageSpinner = (Spinner)findViewById(R.id.languageSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
-                AvailableLocales.getAvailableLocalesAsDisplayLanguage());
+        final LocaleAdapter localeAdapter = new LocaleAdapter(this, getLayoutInflater(), AvailableLocales.getAvailableLocales());
 
-        adapter.setDropDownViewResource(R.layout.spinner_item_style);
-        languageSpinner.setAdapter(adapter);
-        languageSpinner.setSelection(adapter.getPosition(getResources().getConfiguration().locale
-                .getDisplayLanguage(getResources().getConfiguration().locale)));
+        languageSpinner.setAdapter(localeAdapter);
+        languageSpinner.setSelection(localeAdapter.getPosition(getResources().getConfiguration().locale));
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Locale oldLocale = getResources().getConfiguration().locale;
-                Locale newLocale = AvailableLocales.getAvailableLocalesHashMap().get(parent.getSelectedItem());
+                Locale newLocale = (Locale) parent.getSelectedItem();
                 if (!newLocale.getLanguage().equals(oldLocale.getLanguage())) {
                     Log.i("Old Locale", oldLocale.getLanguage());
                     Log.i("New Locale", newLocale.getLanguage());
@@ -216,5 +216,110 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void serverError() {
         Snackbar.make(findViewById(R.id.activity_login), R.string.server_error, Snackbar.LENGTH_LONG).show();
         Log.i("Login", "failed");
+    }
+
+    public class LocaleAdapter extends BaseAdapter {
+        Context context;
+        LayoutInflater inflator;
+        List<Locale> locales;
+        Locale activeLocale;
+
+        public LocaleAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Locale> locales)
+        {
+            this.context = context;
+            this.inflator = layoutInflater;
+            this.locales = locales;
+            activeLocale = getResources().getConfiguration().locale;
+        }
+
+        public int getPosition(Locale locale) {
+            return locales.indexOf(locale);
+        }
+
+        /**
+         * How many items are in the data set represented by this Adapter.
+         *
+         * @return Count of items.
+         */
+        @Override
+        public int getCount() {
+            return locales.size();
+        }
+
+        /**
+         * Get the data item associated with the specified position in the data set.
+         *
+         * @param position Position of the item whose data we want within the adapter's
+         *                 data set.
+         * @return The data at the specified position.
+         */
+        @Override
+        public Object getItem(int position) {
+            return locales.get(position);
+        }
+
+        /**
+         * Get the row id associated with the specified position in the list.
+         *
+         * @param position The position of the item within the adapter's data set whose row id we want.
+         * @return The id of the item at the specified position.
+         */
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        /**
+         * Get a View that displays the data at the specified position in the data set. You can either
+         * create a View manually or inflate it from an XML layout file. When the View is inflated, the
+         * parent View (GridView, ListView...) will apply default layout parameters unless you use
+         * {@link LayoutInflater#inflate(int, ViewGroup, boolean)}
+         * to specify a root view and to prevent attachment to the root.
+         *
+         * @param position    The position of the item within the adapter's data set of the item whose view
+         *                    we want.
+         * @param convertView The old view to reuse, if possible. Note: You should check that this view
+         *                    is non-null and of an appropriate type before using. If it is not possible to convert
+         *                    this view to display the correct data, this method can create a new view.
+         *                    Heterogeneous lists can specify their number of view types, so that this View is
+         *                    always of the right type (see {@link #getViewTypeCount()} and
+         *                    {@link #getItemViewType(int)}).
+         * @param parent      The parent that this view will eventually be attached to
+         * @return A View corresponding to the data at the specified position.
+         */
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+            if(convertView == null) {
+                convertView = inflator.inflate(R.layout.spinner_item, null);
+
+                viewHolder = new ViewHolder();
+                viewHolder.ivSelectedCheckmark = (ImageView) convertView.findViewById(R.id.ivSelectedCheckmark);
+                viewHolder.tvLanguageCurrent = (TextView) convertView.findViewById(R.id.tvLanguageCurrent);
+                viewHolder.tvLanguageLanguage = (TextView) convertView.findViewById(R.id.tvLanguageLanguage);
+                viewHolder.lineBottom = convertView.findViewById(R.id.lineBottom);
+
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+
+            Locale locale = locales.get(position);
+
+            if (locale.getLanguage().equals(activeLocale.getLanguage())) {
+                viewHolder.ivSelectedCheckmark.setVisibility(View.VISIBLE);
+            }
+            viewHolder.tvLanguageLanguage.setText(locale.getDisplayLanguage(locale));
+            viewHolder.tvLanguageCurrent.setText(locale.getDisplayLanguage(activeLocale));
+
+            return convertView;
+        }
+    }
+
+    private static class ViewHolder {
+        public ImageView ivSelectedCheckmark;
+        public TextView tvLanguageCurrent;
+        public TextView tvLanguageLanguage;
+        public View lineBottom;
     }
 }
