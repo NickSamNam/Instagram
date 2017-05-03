@@ -96,9 +96,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             anim.setState(savedInstanceState.getIntArray("animState"));
         }
 
-        usernameEditText.getBackground().mutate().setAlpha(20);
-        passwordEditText.getBackground().mutate().setAlpha(20);
-        findViewById(R.id.signUpTextView).getBackground().mutate().setAlpha(20);
+        usernameEditText.getBackground().mutate().setAlpha(38);
+        passwordEditText.getBackground().mutate().setAlpha(38);
+        findViewById(R.id.signUpTextView).getBackground().mutate().setAlpha(26);
 
         anim.setEnterFadeDuration(500);
         anim.setExitFadeDuration(10000);
@@ -144,6 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton.setOnClickListener(this);
 
         fbLoginButton = (LoginButton) findViewById(R.id.fbLoginButton);
+        fbLoginButton.setBackgroundColor(Color.TRANSPARENT);
         callbackManager = CallbackManager.Factory.create();
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -184,7 +185,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             anim.stop();
     }
 
-    // TODO: 3-5-2017 fix this  
     @Override
     public void statusChanged(boolean ready) {
         loginButton.setEnabled(ready);
