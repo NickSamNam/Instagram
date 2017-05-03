@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count > 0)
+                if (s.length() > 0)
                     loginStatus.setUsernameReady(true);
                 else
                     loginStatus.setUsernameReady(false);
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count > 0)
+                if (s.length() > 0)
                     loginStatus.setPasswordReady(true);
                 else
                     loginStatus.setPasswordReady(false);

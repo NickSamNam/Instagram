@@ -1,5 +1,7 @@
 package edu.avans.nicknam.instagram;
 
+import android.util.Log;
+
 import java.io.Serializable;
 
 /**
@@ -19,6 +21,7 @@ public class LoginStatus implements Serializable {
     public void setUsernameReady(boolean ready) {
         if (usernameReady != ready) {
             usernameReady = ready;
+            Log.i("Username ready", String.valueOf(ready));
             update();
         }
     }
@@ -26,6 +29,7 @@ public class LoginStatus implements Serializable {
     public void setPasswordReady(boolean ready) {
         if (passwordReady != ready) {
             passwordReady = ready;
+            Log.i("Password ready", String.valueOf(ready));
             update();
         }
     }
