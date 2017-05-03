@@ -96,9 +96,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             anim.setState(savedInstanceState.getIntArray("animState"));
         }
 
-        usernameEditText.getBackground().setAlpha(20);
-        passwordEditText.getBackground().setAlpha(20);
-        findViewById(R.id.signUpTextView).getBackground().setAlpha(20);
+        usernameEditText.getBackground().mutate().setAlpha(20);
+        passwordEditText.getBackground().mutate().setAlpha(20);
+        findViewById(R.id.signUpTextView).getBackground().mutate().setAlpha(20);
 
         anim.setEnterFadeDuration(500);
         anim.setExitFadeDuration(10000);
@@ -184,6 +184,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             anim.stop();
     }
 
+    // TODO: 3-5-2017 fix this  
     @Override
     public void statusChanged(boolean ready) {
         loginButton.setEnabled(ready);
@@ -192,7 +193,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             loginButton.setTextColor(Color.BLACK);
             loginButton.setAlpha(1f);
         } else {
-            loginButton.setBackground(getDrawable(R.drawable.button_border));
+            loginButton.setBackground(getResources().getDrawable(R.drawable.button_border));
+            loginButton.setTextColor(Color.WHITE);
             loginButton.setAlpha(.3f);
         }
         Log.i("Status", String.valueOf(ready));
