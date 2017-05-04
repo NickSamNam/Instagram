@@ -309,8 +309,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (locale.getLanguage().equals(activeLocale.getLanguage())) {
                 viewHolder.ivSelectedCheckmark.setVisibility(View.VISIBLE);
             }
-            viewHolder.tvLanguageLanguage.setText(locale.getDisplayLanguage(locale));
-            viewHolder.tvLanguageCurrent.setText(locale.getDisplayLanguage(activeLocale));
+            String displayLanguageLanguage = locale.getDisplayLanguage(locale);
+            String displayLanguageCurrent = locale.getDisplayLanguage(activeLocale);
+            viewHolder.tvLanguageLanguage.setText(displayLanguageLanguage.substring(0,1).toUpperCase() + displayLanguageLanguage.substring(1));
+            viewHolder.tvLanguageCurrent.setText(displayLanguageCurrent.substring(0,1).toUpperCase() + displayLanguageCurrent.substring(1));
 
             return convertView;
         }
