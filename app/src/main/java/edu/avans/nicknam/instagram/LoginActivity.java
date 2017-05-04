@@ -39,7 +39,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("onCreate", "started");
         Log.i("Current locale", getResources().getConfiguration().locale.getDisplayLanguage());
-        long startTime = System.nanoTime();
 
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -160,8 +159,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onError(FacebookException error) {
             }
         });
-        long endTime = System.nanoTime();
-        Log.i("onCreate", "completed in " + (endTime-startTime));
     }
 
     @Override
