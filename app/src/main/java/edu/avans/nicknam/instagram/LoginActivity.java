@@ -37,9 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i("onCreate", "started");
         Log.i("Current locale", getResources().getConfiguration().locale.getDisplayLanguage());
-        long startTime = System.nanoTime();
 
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -70,13 +68,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Configuration configuration = new Configuration(getResources().getConfiguration());
                     configuration.setLocale(newLocale);
                     getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
-//                     TODO: 19-4-2017 ask why not possible
-//                    getResources().getConfiguration().setLocale(newLocale);
-//                    getResources().getConfiguration().setLayoutDirection(newLocale);
-//                    getResources().getConfiguration().setTo(new Configuration(getResources().getConfiguration()));
-//                    getResources().getConfiguration().locale = newLocale;
-//                    onConfigurationChanged(getResources().getConfiguration());
-//                    getResources().getConfiguration().updateFrom(configuration);
 
                     recreate();
                 }
@@ -160,8 +151,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onError(FacebookException error) {
             }
         });
-        long endTime = System.nanoTime();
-        Log.i("onCreate", "completed in " + (endTime-startTime));
     }
 
     @Override
@@ -233,7 +222,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         public int getPosition(Locale locale) {
-            return locales.indexOf(locale);
+            return locales.indexOf(new Locale(locale.getLanguage()));
         }
 
         /**
