@@ -4,6 +4,5 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="InstaGray">#262626</color>
-    <color name="spinnerTextColor">#FFFFFF</color>
     <color name="InstaBlue">#3896ef</color>
 </resources>

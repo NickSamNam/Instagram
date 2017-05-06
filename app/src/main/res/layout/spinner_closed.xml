@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvLanguageSpinner_closed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deutsch"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/down_chevron"
+        android:layout_width="12dp"
+        android:layout_height="14dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLanguageSpinner_closed"
+        app:layout_constraintLeft_toRightOf="@+id/tvLanguageSpinner_closed"
+        app:layout_constraintTop_toTopOf="@+id/tvLanguageSpinner_closed"
+        app:layout_constraintVertical_bias="0.666"
+        app:srcCompat="@drawable/down_chevron" />
+</android.support.constraint.ConstraintLayout>

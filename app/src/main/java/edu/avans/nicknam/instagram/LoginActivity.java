@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Log.i("Login", "failed");
     }
 
-    public class LocaleAdapter extends BaseAdapter {
+    public class LocaleAdapter extends BaseAdapter implements SpinnerAdapter {
         Context context;
         LayoutInflater inflator;
         List<Locale> locales;
@@ -289,39 +289,60 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
          */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
+            ViewHolderClosed viewHolderClosed;
+            if (convertView == null) {
+                convertView = inflator.inflate(R.layout.spinner_closed, null);
+
+                viewHolderClosed = new ViewHolderClosed();
+                viewHolderClosed.tvLanguageSpinner_closed = (TextView) convertView.findViewById(R.id.tvLanguageSpinner_closed);
+
+                convertView.setTag(viewHolderClosed);
+            } else {
+                viewHolderClosed = (ViewHolderClosed) convertView.getTag();
+            }
+            viewHolderClosed.tvLanguageSpinner_closed.setText(activeLocale.getDisplayLanguage(activeLocale).substring(0,1).toUpperCase() + activeLocale.getDisplayLanguage(activeLocale).substring(1));
+            return convertView;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            ViewHolderItem viewHolderItem;
             if(convertView == null) {
                 convertView = inflator.inflate(R.layout.spinner_item, null);
 
-                viewHolder = new ViewHolder();
-                viewHolder.ivSelectedCheckmark = (ImageView) convertView.findViewById(R.id.ivSelectedCheckmark);
-                viewHolder.tvLanguageCurrent = (TextView) convertView.findViewById(R.id.tvLanguageCurrent);
-                viewHolder.tvLanguageLanguage = (TextView) convertView.findViewById(R.id.tvLanguageLanguage);
-                viewHolder.lineBottom = convertView.findViewById(R.id.lineBottom);
+                viewHolderItem = new ViewHolderItem();
+                viewHolderItem.ivSelectedCheckmark = (ImageView) convertView.findViewById(R.id.ivSelectedCheckmark);
+                viewHolderItem.tvLanguageCurrent = (TextView) convertView.findViewById(R.id.tvLanguageCurrent);
+                viewHolderItem.tvLanguageLanguage = (TextView) convertView.findViewById(R.id.tvLanguageLanguage);
+                viewHolderItem.lineBottom = convertView.findViewById(R.id.lineBottom);
 
-                convertView.setTag(viewHolder);
+                convertView.setTag(viewHolderItem);
             } else {
-                viewHolder = (ViewHolder) convertView.getTag();
+                viewHolderItem = (ViewHolderItem) convertView.getTag();
             }
 
             Locale locale = locales.get(position);
 
             if (locale.getLanguage().equals(activeLocale.getLanguage())) {
-                viewHolder.ivSelectedCheckmark.setVisibility(View.VISIBLE);
+                viewHolderItem.ivSelectedCheckmark.setVisibility(View.VISIBLE);
             }
             String displayLanguageLanguage = locale.getDisplayLanguage(locale);
             String displayLanguageCurrent = locale.getDisplayLanguage(activeLocale);
-            viewHolder.tvLanguageLanguage.setText(displayLanguageLanguage.substring(0,1).toUpperCase() + displayLanguageLanguage.substring(1));
-            viewHolder.tvLanguageCurrent.setText(displayLanguageCurrent.substring(0,1).toUpperCase() + displayLanguageCurrent.substring(1));
+            viewHolderItem.tvLanguageLanguage.setText(displayLanguageLanguage.substring(0,1).toUpperCase() + displayLanguageLanguage.substring(1));
+            viewHolderItem.tvLanguageCurrent.setText(displayLanguageCurrent.substring(0,1).toUpperCase() + displayLanguageCurrent.substring(1));
 
             return convertView;
         }
     }
 
-    private static class ViewHolder {
+    private static class ViewHolderItem {
         public ImageView ivSelectedCheckmark;
         public TextView tvLanguageCurrent;
         public TextView tvLanguageLanguage;
         public View lineBottom;
+    }
+
+    private static class ViewHolderClosed {
+        public TextView tvLanguageSpinner_closed;
     }
 }
